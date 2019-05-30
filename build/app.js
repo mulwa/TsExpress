@@ -7,13 +7,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var body_parser_1 = __importDefault(require("body-parser"));
 var Routes_1 = require("./Routes");
+var mongoose_1 = __importDefault(require("mongoose"));
 var App = /** @class */ (function () {
     function App() {
         this.routePrv = new Routes_1.Routes();
         this.app = express_1.default();
         this.config();
         this.routePrv.routes(this.app);
-        // this.mongoSetup();
+        this.mongoSetup();
     }
     App.prototype.config = function () {
         this.app.use(function (req, res, next) {
@@ -26,6 +27,11 @@ var App = /** @class */ (function () {
         this.app.use(body_parser_1.default.json());
         //support application/x-www-form-urlencoded post data
         this.app.use(body_parser_1.default.urlencoded({ extended: false }));
+    };
+    App.prototype.mongoSetup = function () {
+        mongoose_1.default.connect('mongodb://localhost:27017/school', {})
+            .then(function () { return console.log('connection successful'); })
+            .catch(function (err) { return console.error(err); });
     };
     return App;
 }());

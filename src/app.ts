@@ -12,7 +12,7 @@ class App {
         this.app = express();
         this.config(); 
         this.routePrv.routes(this.app); 
-        // this.mongoSetup();
+        this.mongoSetup();
     }
 
     private config(): void{
@@ -30,11 +30,11 @@ class App {
         this.app.use(bodyParser.urlencoded({ extended: false }));
     }
 
-    // private mongoSetup(): void{
-    //     mongoose.connect('mongodb://localhost:27017/school', {})
-    //     .then(() => console.log('connection successful'))
-    //     .catch((err) => console.error(err));
-    // }
+    private mongoSetup(): void{
+        mongoose.connect('mongodb://localhost:27017/school', {})
+        .then(() => console.log('connection successful'))
+        .catch((err) => console.error(err));
+    }
 
 }
 
